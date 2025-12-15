@@ -1,0 +1,19 @@
+.product-grid {
+  display: grid;
+  --itemQuantity: 4;
+  grid-template-columns: repeat(var(--itemQuantity), 1fr);
+}
+@media (max-width: 1023px) {
+  .product-grid {
+    --itemQuantity: 3;
+  }
+}
+@media (max-width: 767px) {
+  .product-grid {
+    --itemQuantity: 2;
+  }
+}
+.product-grid__item {
+  width: 100%;
+  height: 100%;
+}/*# sourceMappingURL=component-product-grid.css.map */

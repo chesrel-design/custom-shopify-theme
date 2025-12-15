@@ -1,0 +1,41 @@
+@import 'imports';
+
+.input {
+    @include reset-input;
+    @include round-borders;
+
+    flex-shrink: 0;
+    padding: 1.6rem 2.4rem;
+    font-size: 0.75em;
+    border: var(--border-l);
+    --borderOpacity: 50%;
+    border-color: color-mix(in srgb, currentColor var(--borderOpacity), transparent);
+
+    &:focus {
+        --borderOpacity: 75%;
+    }
+
+    @include tablet {
+        padding: 1.2rem 2rem;
+    }
+
+    @include hover {
+        scale: 1.02;
+    }
+
+    &--jumbo {
+        padding: 2.4rem 2.8rem;
+
+        @include tablet {
+            padding: 1.6rem 2.2rem;
+        }
+
+        @include mobile {
+            padding-block: 1.2rem;
+        }
+    }
+
+    &[disabled] {
+        cursor: not-allowed;
+    }
+}

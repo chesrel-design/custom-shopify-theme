@@ -1,0 +1,58 @@
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  white-space: nowrap;
+}
+.marquee--no-top-padding {
+  padding-top: 0;
+}
+.marquee--no-bottom-padding {
+  padding-bottom: 0;
+}
+.marquee--no-padding {
+  padding-block: 0;
+}
+.marquee__list {
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  display: flex;
+  border-block: var(--border-l);
+}
+.marquee__item {
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding: 1.2rem 2.8rem;
+  border-left: var(--border-l);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -moz-column-gap: 1.2rem;
+       column-gap: 1.2rem;
+  --iconRotateDeg: 45deg;
+}
+@media (hover: hover) {
+  .marquee__item:hover {
+    --iconRotateDeg: 90deg;
+  }
+}
+@media (hover: none) {
+  .marquee__item:active {
+    --iconRotateDeg: 90deg;
+  }
+}
+.marquee__item-icon {
+  aspect-ratio: 1;
+  width: 1.8rem;
+  height: 1.8rem;
+  rotate: var(--iconRotateDeg);
+  transition-duration: var(--transition-duration);
+}/*# sourceMappingURL=section-marquee.css.map */

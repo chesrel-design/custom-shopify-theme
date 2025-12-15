@@ -1,0 +1,20 @@
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -moz-column-gap: 2.4rem;
+       column-gap: 2.4rem;
+  border: var(--border);
+}
+.quantity-selector__button {
+  width: 7.2rem;
+  height: 6.4rem;
+  --buttonIconPadding: 2.8rem;
+  padding-block: 2.4rem;
+}
+@media (max-width: 1023px) {
+  .quantity-selector__button {
+    width: 6.8rem;
+    height: 5.4rem;
+  }
+}/*# sourceMappingURL=component-quantity-selector.css.map */

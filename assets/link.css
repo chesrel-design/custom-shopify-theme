@@ -1,0 +1,17 @@
+.link {
+  text-decoration-thickness: 0.1em;
+  text-decoration: none;
+}
+@media (hover: hover) {
+  .link:hover {
+    text-decoration: underline;
+  }
+}
+@media (hover: none) {
+  .link:active {
+    text-decoration: underline;
+  }
+}
+.link--active {
+  text-decoration: underline;
+}/*# sourceMappingURL=link.css.map */

@@ -1,0 +1,300 @@
+@import 'imports';
+
+.product {
+    padding-top: calc(var(--section-padding-y) / 2);
+
+    &__inner {
+        display: grid;
+        grid-template-columns: 1.36fr 1fr;
+        column-gap: var(--spacing-l);
+
+        @include tablet {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include mobile {
+            grid-template-columns: 1fr;
+            row-gap: var(--spacing-ml);
+        }
+    }
+
+    &__images {
+        display: flex;
+        gap: var(--spacing-sm);
+        overflow: hidden;
+        --currentImageHeight: 0;
+
+        @include mobile-above {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+
+        @include tablet-above {
+            top: 4rem;
+        }
+
+        @include tablet {
+            flex-direction: column;
+        }
+    }
+
+    &__thumbnails {
+
+        @include tablet-above {
+            max-height: var(--currentImageHeight);
+        }
+
+        &,
+        &-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+
+            @include tablet {
+                flex-direction: row;
+            }
+        }
+
+
+        &-list {
+            gap: var(--spacing-s);
+            overflow: auto;
+            scrollbar-width: none;
+            scroll-snap-type: both mandatory;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        &-button {
+            --buttonIconPadding: 1.2rem;
+            @include square(4.4rem);
+
+            &--first {
+                --rotateIconBy: -90deg;
+
+                @include tablet-above {
+                    --rotateIconBy: 0deg;
+                    margin-top: calc(var(--buttonIconPadding) * -1);
+                }
+
+            }
+
+            &--second {
+                --rotateIconBy: 90deg;
+
+                @include tablet-above {
+                    --rotateIconBy: 180deg;
+                    margin-bottom: calc(var(--buttonIconPadding) * -1);
+                }
+            }
+
+            &--disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+            &-icon {
+                rotate: var(--rotateIconBy);
+            }
+        }
+    }
+
+    &__thumbnail {
+        @include square(10rem);
+        flex-shrink: 0;
+        scroll-snap-align: start;
+        flex-shrink: 0;
+        overflow: hidden;
+        --thumbnailImageScale: 1;
+
+        @include tablet {
+            @include square(8rem);
+        }
+
+        &:not(&--selected) {
+
+            @include hover {
+                --thumbnailImageScale: 0.95;
+            }
+
+        }
+
+        &-image {
+            width: 100%;
+            height: 100%;
+            scale: var(--thumbnailImageScale);
+        }
+
+        &--selected {
+            border: var(--border-l);
+            --thumbnailImageScale: 0.95;
+        }
+    }
+
+    &__current-image {
+
+        &--square {
+            aspect-ratio: 1;
+        }
+
+        &-wrapper {
+            position: relative;
+            width: 100%;
+            height: fit-content;
+
+            @include tablet {
+                order: -1;
+            }
+        }
+
+        &-zoom-button {
+            position: absolute;
+            top: 1.6rem;
+            right: 2rem;
+            @include round(6.4rem);
+            --buttonIconPadding: 2rem;
+            background-color: var(--color-white);
+
+            @include tablet {
+                @include round(5.6rem);
+                top: 1rem;
+                right: 1.2rem;
+                --buttonIconPadding: 1.6rem;
+            }
+
+            @include mobile {
+                @include round(5.2rem);
+            }
+        }
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+
+        --rowGap: 4rem;
+        row-gap: var(--rowGap);
+
+        @include mobile {
+            row-gap: 3.2rem;
+        }
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        row-gap: var(--spacing-s);
+    }
+
+    &__size {
+        display: flex;
+        flex-wrap: wrap;
+
+        &-option {
+            outline: var(--border);
+            margin-right: calc(var(--border-width) / 2);
+            margin-bottom: calc(var(--border-width) / 2);
+            @include flex-center;
+            padding: 1.2rem 2.4rem;
+            color: var(--color-black);
+            position: relative;
+            cursor: pointer;
+            --sizeOptionTextScale: 1;
+
+            &:not(&--selected, &--disabled) {
+                @include hover {
+                    --sizeOptionTextScale: 1.2;
+                }
+            }
+
+            &--disabled {
+                color: var(--color-gray-medium-light);
+                text-decoration: line-through;
+                cursor: not-allowed;
+            }
+
+            &--selected {
+                background-color: var(--color-black);
+                color: var(--color-white)
+            }
+
+            &-value {
+                scale: var(--sizeOptionTextScale);
+            }
+        }
+    }
+
+    &__color {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-s);
+
+        &-option {
+            @include square(10rem);
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            --colorOptionImageScale: 1;
+
+            @include tablet {
+                @include square(8rem);
+            }
+
+            &:not(&--selected) {
+
+                @include hover {
+                    --colorOptionImageScale: 0.95;
+                }
+
+            }
+
+            &--selected {
+                border: var(--border-l);
+                --colorOptionImageScale: 0.95;
+            }
+
+            &--disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+
+            &-image {
+                width: 100%;
+                height: 100%;
+                transition-duration: var(--transition-duration);
+                scale: var(--colorOptionImageScale);
+            }
+        }
+    }
+
+    &__atc-button {
+        width: 100%;
+        background-color: var(--color-black);
+        color: var(--color-white);
+        border-color: var(--color-black);
+
+        &--disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @include tablet {
+            padding-block: 2rem;
+        }
+    }
+
+    &__accordion {
+        width: 100%;
+
+        &+& {
+            margin-top: calc(var(--rowGap) * -1);
+        }
+    }
+}

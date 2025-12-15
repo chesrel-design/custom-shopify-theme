@@ -1,0 +1,61 @@
+.drawer-menu {
+  width: 80svw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.drawer-menu__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--header-padding-y);
+  padding-inline: var(--container-padding-x);
+  justify-content: space-between;
+  -moz-column-gap: 2rem;
+       column-gap: 2rem;
+}
+.drawer-menu__close-button {
+  aspect-ratio: 1;
+  width: 4.4rem;
+  height: 4.4rem;
+  --buttonIconPadding: 1.1rem;
+  margin-left: calc(var(--buttonIconPadding) * -1);
+}
+.drawer-menu__logo-title {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1023px) {
+  .drawer-menu__logo-title {
+    font-weight: 600;
+    color: var(--color-black);
+    font-size: 2.4rem;
+  }
+}
+.drawer-menu__body {
+  flex-grow: 1;
+  padding-block: 3.2rem;
+  padding-inline: var(--container-padding-x);
+}
+.drawer-menu__menu-link {
+  padding-inline: 0;
+}
+.drawer-menu__footer {
+  padding: 2rem var(--container-padding-x);
+  background-color: var(--color-gray-light);
+}
+.drawer-menu__account-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -moz-column-gap: 0.8rem;
+       column-gap: 0.8rem;
+}
+.drawer-menu__account-link-icon {
+  aspect-ratio: 1;
+  width: 1em;
+  height: 1em;
+}
+.drawer-menu__social-icons {
+  justify-content: center;
+  margin-top: 0.8rem;
+}/*# sourceMappingURL=component-drawer-menu.css.map */

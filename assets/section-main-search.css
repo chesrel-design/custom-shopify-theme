@@ -1,0 +1,10 @@
+.search__form {
+  display: flex;
+  -moz-column-gap: 0.6rem;
+       column-gap: 0.6rem;
+}
+.search__button {
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+  color: var(--color-white);
+}/*# sourceMappingURL=section-main-search.css.map */

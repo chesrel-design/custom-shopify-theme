@@ -1,0 +1,23 @@
+@import 'imports';
+
+.link {
+    text-decoration-thickness: 0.1em;
+    text-decoration: none;
+
+
+    @include hover {
+        text-decoration: underline;
+    }
+
+    &--active {
+        text-decoration: underline;
+    }
+
+    &--underlined {
+        text-decoration: underline;
+
+        @include hover {
+            text-decoration-thickness: 0.15em;
+        }
+    }
+}

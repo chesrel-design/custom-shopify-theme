@@ -1,0 +1,67 @@
+@import 'imports';
+
+.zoom-window {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    --windowPadding: 2rem;
+    padding: var(--windowPadding);
+
+    &:modal {
+        width: 80vw;
+
+        @include tablet-above {
+            height: 80vh;
+        }
+
+        @include tablet {
+            width: 90vw;
+            max-height: 80vh;
+        }
+    }
+
+    &__close-button {
+        margin-left: auto;
+        margin-top: calc(var(--windowPadding) * -1);
+        margin-right: calc(var(--windowPadding) * -1);
+    }
+
+    &__image {
+        @include flex-center;
+
+        @include tablet {
+            align-items: unset;
+        }
+    }
+
+    &__bar {
+
+        @include flex-center;
+        text-align: center;
+
+        @include tablet {
+            padding-top: var(--windowPadding);
+        }
+
+        @include tablet-above {
+            position: absolute;
+            @include abs-center(x);
+            bottom: calc(var(--windowPadding) + 1rem);
+        }
+    }
+
+    &__zoom {
+
+        &-buttons {
+            @include flex-center;
+            column-gap: 0.8rem;
+        }
+
+        &-button {
+            background-color: var(--color-white);
+            @include round-borders;
+            @include square(5.2rem);
+            --buttonIconPadding: 1.5rem;
+        }
+    }
+}

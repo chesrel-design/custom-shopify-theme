@@ -1,0 +1,66 @@
+@import 'imports';
+
+.drawer-menu {
+    width: 80svw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+        @include flex-center;
+
+        padding-top: var(--header-padding-y);
+        padding-inline: var(--container-padding-x);
+        justify-content: space-between;
+        column-gap: 2rem;
+    }
+
+    &__close-button {
+        @include square(4.4rem);
+        --buttonIconPadding: 1.1rem;
+        margin-left: calc(var(--buttonIconPadding) * -1);
+    }
+
+    &__logo {
+
+        &-title {
+            overflow-wrap: anywhere;
+
+            @include tablet {
+                @include h4;
+            }
+        }
+    }
+
+    &__body {
+        flex-grow: 1;
+        padding-block: 3.2rem;
+        padding-inline: var(--container-padding-x);
+    }
+
+    &__menu {
+
+        &-link {
+            padding-inline: 0;
+        }
+    }
+
+    &__footer {
+        padding: 2rem var(--container-padding-x);
+        background-color: var(--color-gray-light);
+    }
+
+    &__account-link {
+        @include flex-center;
+        column-gap: 0.8rem;
+
+        &-icon {
+            @include square(1em);
+        }
+    }
+
+    &__social-icons {
+        justify-content: center;
+        margin-top: 0.8rem;
+    }
+}

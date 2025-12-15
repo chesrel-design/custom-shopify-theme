@@ -1,0 +1,57 @@
+@import 'imports';
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.marquee {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    white-space: nowrap;
+
+    &--no-top-padding {
+        padding-top: 0;
+    }
+
+    &--no-bottom-padding {
+        padding-bottom: 0;
+    }
+
+    &--no-padding {
+        padding-block: 0;
+    }
+
+
+    &__list {
+        max-width: fit-content;
+        display: flex;
+        border-block: var(--border-l);
+    }
+
+    &__item {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 1.2rem 2.8rem;
+        border-left: var(--border-l);
+        @include flex-center;
+        column-gap: 1.2rem;
+        --iconRotateDeg: 45deg;
+
+        @include hover {
+            --iconRotateDeg: 90deg;
+        }
+
+        &-icon {
+            @include square(1.8rem);
+            rotate: var(--iconRotateDeg);
+            transition-duration: var(--transition-duration);
+        }
+    }
+}

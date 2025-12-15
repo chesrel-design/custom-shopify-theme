@@ -1,0 +1,226 @@
+//introduce color schemes!!
+
+@import 'imports';
+
+.banner {
+    position: relative;
+    color: var(--color-white-body-text);
+
+    &--small {
+        --bannerMinHeight: 35rem
+    }
+
+    &--regular {
+        --bannerMinHeight: 50rem
+    }
+
+    &--tall {
+        --bannerMinHeight: 70rem
+    }
+
+    &--small#{&}--smaller-on-mobile {
+        @include mobile {
+            --bannerMinHeight: 30rem;
+        }
+    }
+
+    &--regular#{&}--smaller-on-mobile {
+        @include mobile {
+            --bannerMinHeight: 40rem;
+        }
+    }
+
+    &--tall#{&}--smaller-on-mobile {
+        @include mobile {
+            --bannerMinHeight: 50rem;
+        }
+    }
+
+    &__background {
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        --color-background: var(--color-black);
+        background-color: var(--color-background);
+
+        &-images {
+            display: flex;
+            height: 100%;
+
+            &--3 {
+                @include mobile {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-auto-rows: 1fr;
+                }
+
+                & .banner__background-image:last-child {
+                    grid-column: 1 / -1;
+                }
+            }
+
+        }
+
+        &-image {
+            width: 100%;
+        }
+
+        &-overlay {
+            position: absolute;
+            inset: 0;
+
+            &--gradient {
+                background: linear-gradient(to top,
+                        rgba(0, 0, 0, 0.5) 20%,
+                        rgba(0, 0, 0, 0) 60%);
+            }
+
+            &--full {
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+
+
+        }
+    }
+
+    &__inner {
+        min-height: var(--bannerMinHeight);
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 6rem;
+    }
+
+    &__menus,
+    &__box {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        height: fit-content;
+
+        &--vertical {
+
+            &-top {
+                align-self: start;
+            }
+
+            &-center {
+                align-self: center;
+            }
+
+            &-bottom {
+                align-self: end;
+            }
+        }
+    }
+
+    &__box {
+        column-gap: 4rem;
+
+        @include mobile {
+            flex-direction: column;
+            row-gap: var(--spacing-ml);
+            align-items: start;
+        }
+    }
+
+    &__menus {
+        column-gap: 1.6rem;
+
+
+        &--center {
+            justify-content: center;
+            align-items: center;
+        }
+
+        &--3 {
+            @include mobile {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                justify-content: space-between;
+                row-gap: 2rem;
+            }
+
+            .banner__menu-list {
+
+                @include mobile {
+
+                    &:nth-child(2) {
+                        text-align: end;
+                        align-items: end;
+                    }
+
+                    &:nth-child(3) {
+                        text-align: center;
+                        align-items: center;
+                        grid-column: 1 / -1;
+                    }
+                }
+            }
+        }
+    }
+
+    &__menu {
+
+        &-list {
+            align-items: center;
+            text-align: center;
+
+            &:first-child {
+                align-items: start;
+                text-align: start;
+            }
+
+            &:last-child {
+                align-items: end;
+                text-align: right;
+            }
+        }
+
+        &-link {
+            padding-block: 0.8rem;
+        }
+    }
+
+    &__box {
+
+        &--center {
+            flex-direction: column;
+            align-items: center;
+            --contentAlignment: center;
+            max-width: var(--container-width-s);
+            text-align: center;
+            margin-inline: auto;
+
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: var(--contentAlignment);
+        row-gap: var(--spacing-sm);
+        max-width: var(--container-width-s);
+    }
+
+    &__title {
+        color: var(--color-white);
+    }
+
+    &__buttons {
+        @include flex-center;
+        gap: var(--spacing-sm);
+        flex-shrink: 0;
+
+        @include mobile {
+            flex-direction: column;
+            align-items: stretch;
+            width: 100%;
+        }
+    }
+
+    &__button {
+        background-color: var(--color-white);
+        color: var(--color-black);
+        border-color: var(--color-white);
+    }
+}

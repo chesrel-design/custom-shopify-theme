@@ -1,0 +1,19 @@
+.dialog {
+    @include reset-dialog;
+    max-width: 100svw;
+    position: fixed;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity var(--transition-duration);
+    overflow: hidden;
+
+    &:open {
+        visibility: visible;
+        opacity: 1;
+        overflow: initial;
+    }
+
+    &:modal {
+        max-height: 100%;
+    }
+}

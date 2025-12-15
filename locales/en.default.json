@@ -1,0 +1,102 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+    "general": {
+        "page_not_found": "This page doesn't exist",
+        "go_to_homepage": "Go to the home page",
+        "submit": "Submit"
+    },
+    "account": {
+        "log_in": "Log in",
+        "go_to_account": "Go to your account",
+    },
+    "a11y": {
+        "navigation": {
+            "nav_menu": {
+                "open": "Open navigation menu",
+                "close": "Close navigation menu"
+            },
+        },
+        "price": "Price",
+        "product": {
+            "link": "Product link"
+        },
+        "zoom": {
+            "window": {
+                "close": "Close zoom window"
+            },
+            "pinch": "Pinch to zoom",
+            "in": "Zoom in",
+            "out": "Zoom out",
+            "product_featured_image": "Zoom {{ product_title }} featured image in"
+        },
+        "open_search": "Open search"
+    },
+    "product": {
+        "price": {
+            "from": "From"
+        },
+        "media": {
+            "previous": "Previous product media",
+            "next": "Next product media"
+        },
+        "cart": {
+            "add": "Add to cart"
+        },
+        "sold_out": "Sold out",
+        "choose_size": "Choose a size",
+        "choose_color": "Choose a color",
+        "quantity": "Quantity",
+        "minus_item": "Minus one item",
+        "plus_item": "Plus one item"
+    },
+    "cart": {
+        "title": "Your cart",
+        "caption": "Your cart contents",
+        "product": "Product",
+        "variant": "Variant",
+        "quantity": "Quantity",
+        "total": "Total",
+        "remove": "Remove",
+        "default_variant": "Default variant",
+        "remove_item": "Remove {{ product }} from cart",
+        "subtotal": "Subtotal",
+        "checkout": "Checkout",
+        "empty": "Your cart is currently empty",
+        "continue_shopping": "Continue shopping",
+        "decrease_quantity_for_product": "Decrease quantity for {{ product }}",
+        "increase_quantity_for_product": "Increase quantity for {{ product }}",
+        "precheckout_note": "Taxes included. Discounts and shipping calculated at checkout.",
+        "estimated_total": "Estimated total",
+        "n_items_in_cart": "{{ quantity }} items in cart"
+    },
+    "social_media": {
+        "tiktok": "Tiktok",
+        "snapchat": "Snapchat",
+        "instagram": "Instagram"
+    },
+    "collection": {
+        "empty": "This collection is empty"
+    },
+    "search": {
+        "page_title": "Search page",
+        "page_description": "Look for any product in this store.",
+        "results": "Search results",
+        "page_description_after_search": "{{ count }} results found for a query: \"{{ query }}\"",
+        "page_title_nothing_found": "Nothing found. Try another search",
+        "input": {
+            "placeholder": "Your query here..."
+        },
+        "button_text": "Search"
+    },
+    "password": {
+        "enter_password_placeholder": "Enter password..."
+    }
+}

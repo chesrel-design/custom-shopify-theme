@@ -1,0 +1,111 @@
+@import 'imports';
+
+.sticky-header-group {
+    position: sticky;
+    top: var(--headerGroupHeight);
+    width: 100%;
+    z-index: 99999;
+    transition-duration: var(--transition-duration);
+    background-color: var(--color-white);
+
+    --scrolled-past {
+        transform: translateY(var(--headerGroupHeight));
+    }
+}
+
+.header {
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: clamp(2rem, 2vw, 3.2rem);
+        padding-block: var(--header-padding-y);
+
+        @include tablet {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            column-gap: 0;
+        }
+    }
+
+    &__main {
+        @include flex-center;
+        column-gap: clamp(2rem, 3vw, 8rem);
+
+        @include tablet {
+            display: contents;
+        }
+    }
+
+    &__logo {
+        @include tablet {
+            @include flex-center;
+
+            margin-inline: 1.6rem;
+        }
+
+        &-title {
+
+            @include tablet {
+                @include h4;
+            }
+        }
+    }
+
+    &__menu {
+
+        &-link {
+            text-wrap: nowrap;
+        }
+    }
+
+    &__actions {
+        @include flex-center;
+        column-gap: 0.4rem;
+
+        &>*:last-child {
+            margin-right: calc(var(--buttonIconPadding) * -1);
+        }
+
+        @include tablet {
+            column-gap: 0.2rem;
+            justify-content: end;
+        }
+    }
+
+    &__button {
+        @include square(4.4rem);
+        color: var(--color-black);
+        --buttonIconPadding: 1.2rem;
+
+        @include tablet {
+            --buttonIconPadding: 1.1rem;
+        }
+
+        &--menu {
+            margin-left: calc(var(--buttonIconPadding) * -1);
+        }
+    }
+
+    &__cart-button {
+        position: relative;
+
+        &-indicator {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+            font-size: 1.2rem;
+            background: var(--color-white);
+            line-height: 1;
+            height: fit-content;
+            width: fit-content;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: 1;
+            @include round(1.6rem);
+            padding: 0.4rem;
+        }
+    }
+}

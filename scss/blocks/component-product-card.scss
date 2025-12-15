@@ -1,0 +1,62 @@
+@import 'imports';
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    outline: var(--border);
+    margin-right: calc(var(--border-width) / 2);
+    margin-bottom: calc(var(--border-width) / 2);
+    position: relative;
+    --imageScale: 1;
+    height: 100%;
+
+    @include hover {
+        --imageScale: 1.1;
+    }
+
+    &--full-border {
+        border: var(--border);
+    }
+
+    &__link {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+    }
+
+    &__media {
+        position: relative;
+        overflow: hidden;
+    }
+
+    &__image {
+        aspect-ratio: 0.78;
+        scale: var(--imageScale);
+        transition-duration: var(--transition-duration);
+    }
+
+    &__zoom-button {
+        position: absolute;
+        top: 1.2rem;
+        right: 1.2rem;
+        z-index: 2;
+        @include round(5.2rem);
+        --buttonIconPadding: 1.6rem;
+        background-color: var(--color-white);
+        color: var(--color-black);
+
+        @include mobile {
+            @include round(4rem);
+            --buttonIconPadding: 1.2rem;
+        }
+    }
+
+    &__info {
+        border-top: var(--border);
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
+        padding: 1.6rem 2rem;
+    }
+}

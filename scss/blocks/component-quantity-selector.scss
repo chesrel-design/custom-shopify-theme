@@ -1,0 +1,19 @@
+@import 'imports';
+
+.quantity-selector {
+        @include flex-center;
+        column-gap: 2.4rem;
+        border: var(--border);
+
+        &__button {
+            width: 7.2rem;
+            height: 6.4rem;
+            --buttonIconPadding: 2.8rem;
+            padding-block: 2.4rem;
+
+            @include tablet {
+                width: 6.8rem;
+                height: 5.4rem;
+            }
+        }
+    }

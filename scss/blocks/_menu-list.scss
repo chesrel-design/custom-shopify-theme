@@ -1,0 +1,19 @@
+@import 'imports';
+
+.menu-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    &--vertical {
+        flex-direction: column;
+    }
+
+    &__menu {
+
+        &-link {
+            @include flex-center(true);
+            column-gap: 0.6rem;
+            padding: 1.6rem 2.4rem;
+        }
+    }
+}

@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Logo",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Select your store logo"
+            },
+            {
+                "type": "image_picker",
+                "id": "favicon",
+                "label": "Select a favicon",
+                "info": "Favicon is a small icon next to your site's name in the browser tab"
+            }
+        ]
+    },
+    {
+        "name": "Social media links",
+        "settings": [
+            {
+                "type": "url",
+                "id": "social_tiktok_link",
+                "label": "Tiktok",
+            },
+            {
+                "type": "url",
+                "id": "social_instagram_link",
+                "label": "Instagram",
+            },
+            {
+                "type": "url",
+                "id": "social_snapchat_link",
+                "label": "Snapchat",
+            },
+        ]
+    }
+]

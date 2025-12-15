@@ -1,0 +1,114 @@
+.sticky-header-group {
+  position: sticky;
+  top: var(--headerGroupHeight);
+  width: 100%;
+  z-index: 99999;
+  transition-duration: var(--transition-duration);
+  background-color: var(--color-white);
+}
+.sticky-header-group --scrolled-past {
+  transform: translateY(var(--headerGroupHeight));
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  -moz-column-gap: clamp(2rem, 2vw, 3.2rem);
+       column-gap: clamp(2rem, 2vw, 3.2rem);
+  padding-block: var(--header-padding-y);
+}
+@media (max-width: 1023px) {
+  .header__inner {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    -moz-column-gap: 0;
+         column-gap: 0;
+  }
+}
+.header__main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -moz-column-gap: clamp(2rem, 3vw, 8rem);
+       column-gap: clamp(2rem, 3vw, 8rem);
+}
+@media (max-width: 1023px) {
+  .header__main {
+    display: contents;
+  }
+}
+@media (max-width: 1023px) {
+  .header__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-inline: 1.6rem;
+  }
+}
+@media (max-width: 1023px) {
+  .header__logo-title {
+    font-weight: 600;
+    color: var(--color-black);
+    font-size: 2.4rem;
+  }
+}
+.header__menu-link {
+  text-wrap: nowrap;
+}
+.header__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -moz-column-gap: 0.4rem;
+       column-gap: 0.4rem;
+}
+.header__actions > *:last-child {
+  margin-right: calc(var(--buttonIconPadding) * -1);
+}
+@media (max-width: 1023px) {
+  .header__actions {
+    -moz-column-gap: 0.2rem;
+         column-gap: 0.2rem;
+    justify-content: end;
+  }
+}
+.header__button {
+  aspect-ratio: 1;
+  width: 4.4rem;
+  height: 4.4rem;
+  color: var(--color-black);
+  --buttonIconPadding: 1.2rem;
+}
+@media (max-width: 1023px) {
+  .header__button {
+    --buttonIconPadding: 1.1rem;
+  }
+}
+.header__button--menu {
+  margin-left: calc(var(--buttonIconPadding) * -1);
+}
+.header__cart-button {
+  position: relative;
+}
+.header__cart-button-indicator {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.2rem;
+  background: var(--color-white);
+  line-height: 1;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1;
+  aspect-ratio: 1;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: calc(infinity * 1px);
+  padding: 0.4rem;
+}/*# sourceMappingURL=section-header.css.map */

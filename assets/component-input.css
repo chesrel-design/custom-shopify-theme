@@ -1,0 +1,48 @@
+.input {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  transition-duration: var(--transition-duration);
+  outline: none;
+  border-radius: calc(infinity * 1px);
+  flex-shrink: 0;
+  padding: 1.6rem 2.4rem;
+  font-size: 0.75em;
+  border: var(--border-l);
+  --borderOpacity: 50%;
+  border-color: color-mix(in srgb, currentColor var(--borderOpacity), transparent);
+}
+.input:focus {
+  --borderOpacity: 75%;
+}
+@media (max-width: 1023px) {
+  .input {
+    padding: 1.2rem 2rem;
+  }
+}
+@media (hover: hover) {
+  .input:hover {
+    scale: 1.02;
+  }
+}
+@media (hover: none) {
+  .input:active {
+    scale: 1.02;
+  }
+}
+.input--jumbo {
+  padding: 2.4rem 2.8rem;
+}
+@media (max-width: 1023px) {
+  .input--jumbo {
+    padding: 1.6rem 2.2rem;
+  }
+}
+@media (max-width: 767px) {
+  .input--jumbo {
+    padding-block: 1.2rem;
+  }
+}
+.input[disabled] {
+  cursor: not-allowed;
+}/*# sourceMappingURL=component-input.css.map */

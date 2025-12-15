@@ -1,0 +1,11 @@
+@import 'imports';
+
+.social-icons {
+    display: flex;
+    flex-wrap: wrap;
+
+    &__link {
+        @include square(4rem);
+        --buttonIconPadding: 1rem;
+    }
+}

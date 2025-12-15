@@ -1,0 +1,5 @@
+<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+  <!-- filled cross with thinner bars spanning the full viewBox -->
+  <rect x="9.25" y="0" width="1.5" height="20" fill="currentColor" transform="rotate(45 10 10)"/>
+  <rect x="9.25" y="0" width="1.5" height="20" fill="currentColor" transform="rotate(-45 10 10)"/>
+</svg>
