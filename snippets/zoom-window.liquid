@@ -1,0 +1,35 @@
+{% comment %}
+  opens a modal zoom window with dynamic js-populated data. doesnt accept parameters
+{% endcomment %}
+
+{{ 'component-zoom-window.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'zoom-window.js' | asset_url }}" defer type="module"></script>
+
+<dialog class="zoom-window dialog">
+  <form class="display-contents" method="dialog">
+    <button class="zoom-window__close-button button button--icon" type="submit">
+      <div class="svg-wrapper">
+        {{ 'icon-cross.svg' | inline_asset_content }}
+      </div>
+      <span class="visually-hidden">{{ 'a11y.zoom.window.close' | t }}</span>
+    </button>
+  </form>
+  <div class="zoom-window__image img-contain" data-zoom-window-image=""></div>
+  <div class="zoom-window__bar">
+    <span class="zoom-window__hint text--m hidden-desktop">{{ 'a11y.zoom.pinch' | t }}</span>
+    <div class="zoom-window__zoom-buttons visible-desktop">
+      <button class="zoom-window__zoom-button button button--icon" data-zoom-window-zoom-in="">
+        <span class="visually-hidden">{{ 'a11y.zoom.in' | t }}</span>
+        <div class="svg-wrapper">
+          {{ 'icon-zoom-in.svg' | inline_asset_content }}
+        </div>
+      </button>
+      <button class="zoom-window__zoom-button button button--icon" data-zoom-window-zoom-out="">
+        <span class="visually-hidden">{{ 'a11y.zoom.out' | t }}</span>
+        <div class="svg-wrapper">
+          {{ 'icon-zoom-out.svg' | inline_asset_content }}
+        </div>
+      </button>
+    </div>
+  </div>
+</dialog>

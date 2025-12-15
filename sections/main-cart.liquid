@@ -1,0 +1,170 @@
+{{ 'component-quantity-selector.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-cart.css' | asset_url | stylesheet_tag }}
+
+<section class="cart section container">
+  <div class="cart__inner">
+    {% assign continue_shopping_url = routes.all_products_collection_url | default: routes.root_url %}
+    <header class="section__header">
+      <div class="section__info">
+        <h1 class="section__title h2">{{ 'cart.title' | t }}</h1>
+      </div>
+      <a class="cart__continue-shopping-link link link--underlined" href="{{ continue_shopping_url }}"
+        >{{ 'cart.continue_shopping' | t }}</a
+      >
+    </header>
+
+    {% if cart.item_count > 0 %}
+      <div class="cart__column-titles cart__grid text--ml" aria-hidden="true">
+        <span class="cart__column-title cart__column-title--product">{{ 'cart.product' | t }}</span>
+        <span class="cart__column-title cart__column-title--quantity hidden-mobile">{{ 'cart.quantity' | t }}</span>
+        <span class="cart__column-title cart__column-title--total">{{ 'cart.total' | t }}</span>
+      </div>
+      <div class="cart__items">
+        {% for line in cart.items %}
+          <article class="cart__item cart__grid">
+            <div class="cart__item-product">
+              {% if line.image %}
+                <a class="cart__item-media img-cover" href="{{ line.url }}">
+                  {% render 'image', image: line.image %}
+                </a>
+              {% endif %}
+
+              <div class="cart__item-content">
+                <h2 class="cart__item-title text--l">
+                  <a class="link" href="{{ line.url }}">{{ line.product.title }}</a>
+                </h2>
+                <div class="cart__item-price">
+                  <p>{{ line.final_price | money }}</p>
+                </div>
+
+                {% if line.product.has_only_default_variant == false %}
+                  <div class="cart__item-options">
+                    {% for option in line.options_with_values %}
+                      <p>{{ option.name }}: {{ option.value }}</p>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                {% if line.selling_plan_allocation %}
+                  <div class="cart__item-selling-plan">
+                    <p>{{ line.selling_plan_allocation.selling_plan.name }}</p>
+                  </div>
+                {% endif %}
+
+                {% if line.properties.size > 0 %}
+                  {% for property in line.properties %}
+                    {% assign property_key = property.first %}
+                    {% assign property_value = property.last %}
+                    {% assign property_first_character = property_key | slice: 0, 1 %}
+                    {% unless property_value == blank or property_first_character == '_' or property_key == blank %}
+                      <p>
+                        {{ property_key }}:
+                        {% if property_value contains '/uploads/' %}
+                          <a href="{{ property_value }}">{{ property_value | split: '/' | last }}</a>
+                        {% else %}
+                          {{ property_value }}
+                        {% endif %}
+                      </p>
+                    {% endunless %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="cart__item-quantity">
+              <span class="visually-hidden">{{ 'cart.quantity' | t }}</span>
+              {% assign decreased_quantity = line.quantity | minus: 1 %}
+              {% if decreased_quantity < 0 %}
+                {% assign decreased_quantity = 0 %}
+              {% endif %}
+              {% assign decrease_form_id = 'CartQuantityDecrease-' | append: forloop.index0 %}
+              {% assign increase_form_id = 'CartQuantityIncrease-' | append: forloop.index0 %}
+              <div class="cart__item-quantity-selector quantity-selector" data-quantity-selector>
+                <input
+                  type="number"
+                  name="quantity"
+                  min="0"
+                  value="{{ line.quantity }}"
+                  class="cart__item-quantity-selector-input quantity-selector__input visually-hidden"
+                  data-quantity-input
+                >
+                <button
+                  class="cart__item-quantity-selector-button quantity-selector__button quantity-selector__button--decrease button button--icon"
+                  type="submit"
+                  form="{{ decrease_form_id }}"
+                  data-quantity-button="decrease"
+                  aria-label="Decrease quantity for {{ line.product.title }}"
+                >
+                  <span class="visually-hidden">{{ 'cart.decrease_quantity_for_product' | t: product: line.product.title }}</span>
+                  <div class="cart__item-quantity-selector-icon quantity-selector__icon svg-wrapper">
+                    {{ 'icon-minus.svg' | inline_asset_content }}
+                  </div>
+                </button>
+                <span
+                  class="cart__item-quantity-selector-indicator quantity-selector__indicator"
+                  aria-hidden="true"
+                  data-quantity-indicator
+                >
+                  {{- line.quantity -}}
+                </span>
+                <button
+                  class="cart__item-quantity-selector-button quantity-selector__button quantity-selector__button--increase button button--icon"
+                  type="submit"
+                  form="{{ increase_form_id }}"
+                  data-quantity-button="increase"
+                  aria-label="Increase quantity for {{ line.product.title }}"
+                >
+                  <span class="visually-hidden">{{ 'cart.increase_quantity_for_product' | t: product: line.product.title }}</span>
+                  <div class="cart__item-quantity-selector-icon quantity-selector__icon svg-wrapper">
+                    {{ 'icon-plus.svg' | inline_asset_content }}
+                  </div>
+                </button>
+              </div>
+
+              <form class="visually-hidden" method="post" action="{{ routes.cart_change_url }}" id="{{ decrease_form_id }}">
+                <input type="hidden" name="id" value="{{ line.key }}">
+                <input type="hidden" name="quantity" value="{{ decreased_quantity }}">
+              </form>
+              <form class="visually-hidden" method="post" action="{{ routes.cart_change_url }}" id="{{ increase_form_id }}">
+                <input type="hidden" name="id" value="{{ line.key }}">
+                <input type="hidden" name="quantity" value="{{ line.quantity | plus: 1 }}">
+              </form>
+              <form method="post" action="{{ routes.cart_change_url }}" class="cart__item-remove">
+                <input type="hidden" name="id" value="{{ line.key }}">
+                <input type="hidden" name="quantity" value="0">
+                <button
+                  type="submit"
+                  aria-label="{{ 'cart.remove_item' | t: product: line.product.title }}"
+                  class="cart__item-remove reset-button link link--underlined"
+                >
+                  <span aria-hidden="true">{{ 'cart.remove' | t }}</span>
+                </button>
+              </form>
+            </div>
+
+            <div class="cart__item-total">
+              <span class="visually-hidden">{{ 'cart.total' | t }}</span>
+              <span>{{ line.final_line_price | money }}</span>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      <div class="cart__summary">
+        <div class="cart__summary-total">
+          <h2 class="text--m">{{ 'cart.estimated_total' | t }}</h2>
+          <p>{{ cart.total_price | money_with_currency }}</p>
+        </div>
+        <p>{{ 'cart.precheckout_note' | t }}</p>
+        <form method="post" action="{{ routes.cart_url }}">
+          <div class="display-contents text--ml">
+            <button class="cart__checkout-button button bold" type="submit" name="checkout" value="true">
+              {{ 'cart.checkout' | t }}
+            </button>
+          </div>
+        </form>
+      </div>
+    {% else %}
+      <p>{{ 'cart.empty' | t }}</p>
+    {% endif %}
+  </div>
+</section>

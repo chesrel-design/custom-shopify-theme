@@ -1,0 +1,48 @@
+{% comment %}
+  Renders a list of social media icons with links from theme settings.
+
+  Accepts:
+  class string optional
+{% endcomment %}
+
+{{ 'component-social-icons.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  if settings.social_tiktok_link or settings.social_snapchat_link or settings.social_instagram_link
+    assign render_social_icons = true
+  endif
+%}
+{% if render_social_icons %}
+  <ul class="social-icons {% if class %}{{ class }}{% endif %}">
+    {% if settings.social_tiktok_link %}
+      <li class="social-icons__item">
+        <a href="{{settings.social_tiktok_link }}" class="social-icons__link button button--icon">
+          <div class="svg-wrapper">
+            {{ 'icon-tiktok.svg' | inline_asset_content }}
+          </div>
+          <span class="visually-hidden">{{ 'social_media.tiktok' | t }}</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_instagram_link %}
+      <li class="social-icons__item">
+        <a href="{{settings.social_instagram_link }}" class="social-icons__link button button--icon">
+          <div class="svg-wrapper">
+            {{ 'icon-instagram.svg' | inline_asset_content }}
+          </div>
+          <span class="visually-hidden">{{ 'social_media.instagram' | t }}</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_snapchat_link %}
+      <li class="social-icons__item">
+        <a href="{{settings.social_snapchat_link }}" class="social-icons__link button button--icon">
+          <div class="svg-wrapper">
+            {{ 'icon-snapchat.svg' | inline_asset_content }}
+          </div>
+          <span class="visually-hidden">{{ 'social_media.snapchat' | t }}</span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+{% endif %}

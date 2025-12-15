@@ -1,0 +1,314 @@
+{{ 'section-banner.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign has_bg_images = false
+  assign bg_images_count = 0
+  assign has_content = false
+  assign has_buttons = false
+  assign menus_count = 0
+  assign has_menus = false
+
+  for block in section.blocks
+    case block.type
+      when 'background_image'
+        assign has_bg_images = true
+        assign bg_images_count = bg_images_count | plus: 1
+      when 'title', 'text'
+        assign has_content = true
+      when 'button'
+        if block.settings.button_title != blank
+          assign has_buttons = true
+        endif
+      when 'menu'
+        if block.settings.menu != blank
+          assign has_menus = true
+          assign menus_count = menus_count | plus: 1
+        endif
+    endcase
+  endfor
+%}
+
+<section class="banner banner--{{ section.settings.banner_height }} {% if section.settings.smaller_on_mobile %}banner--smaller-on-mobile{% endif %} text--l">
+  <div class="banner__background">
+    {% if has_bg_images %}
+      <div
+        class="
+          banner__background-overlay
+          {% if section.settings.images_overlay != blank %}banner__background-overlay--{{ section.settings.images_overlay }}{% endif %}
+        "
+      ></div>
+      <div class="banner__background-images {% if bg_images_count == 3 %}banner__background-images--3{% endif %}">
+        {% for block in section.blocks %}
+          {% if block.type == 'background_image' %}
+            <div class="banner__background-image img-cover">
+              {% render 'image', image: block.settings.image %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+  <div class="banner__inner section container">
+    {% if has_menus %}
+      <nav
+        class="
+          banner__menus banner__menus--vertical-{{ section.settings.vertical_menus_alignment }}
+          {% if section.settings.center_menus %}banner__menus--center{% endif %}
+           {% if menus_count == 3 %}banner__menus--3{% endif %}
+        "
+      >
+        {% for block in section.blocks %}
+          {% if block.type == 'menu' and block.settings.menu != blank %}
+            <ul
+              class="banner__menu-list menu-list banner__menu-list--vertical menu-list--vertical"
+            >
+              {% for link in block.settings.menu.links %}
+                <li class="banner__menu-item menu-list__menu-item">
+                  <a href="{{ link.url }}" class="banner__menu-link menu-list__menu-link link">
+                    {{- link.title | escape -}}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endfor %}
+      </nav>
+    {% endif %}
+    {% if has_content or has_buttons %}
+      <div class="banner__box banner__box--vertical-{{ section.settings.vertical_container_alignment }} {% if section.settings.center_all_content %}banner__box--center{% endif %}">
+        {% if has_content %}
+          <div class="banner__content">
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when 'title' %}
+                  {% if block.settings.title %}
+                    <h2 class="banner__title h1">{{ block.settings.title }}</h2>
+                  {% endif %}
+                {% when 'text' %}
+                  {% if block.settings.text %}
+                    <div class="banner__text">{{ block.settings.text }}</div>
+                  {% endif %}
+              {% endcase %}
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if has_buttons %}
+          <div class="banner__buttons">
+            {% for block in section.blocks %}
+              {% if block.type == 'button' and block.settings.button_title != blank %}
+                <a
+                  href="{{ block.settings.button_link }}"
+                  class="banner__button button button--jumbo bold"
+                  {% if block.settings.button_link == blank %}
+                    disabled
+                  {% endif %}
+                >
+                  {{- block.settings.button_title | escape -}}
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Banner",
+  "settings": [
+    {
+      "type": "select",
+      "id": "banner_height",
+      "label": "Banner height",
+      "options": [
+        {
+          "label": "Small",
+          "value": "small"
+        },
+        {
+          "label": "Regular",
+          "value": "regular"
+        },
+        {
+          "label": "Tall",
+          "value": "tall"
+        }
+      ],
+      "default": "tall"
+    },
+    {
+      "type": "checkbox",
+      "id": "smaller_on_mobile",
+      "label": "Smaller on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "center_all_content",
+      "label": "Center all content",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "vertical_container_alignment",
+      "label": "Container vertical alignment",
+      "options": [
+        {
+          "label": "Top",
+          "value": "top"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Bottom",
+          "value": "bottom"
+        }
+      ],
+      "default": "bottom"
+    },
+    {
+      "type": "checkbox",
+      "id": "center_menus",
+      "label": "Center menus",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "vertical_menus_alignment",
+      "label": "Menus vertical alignment",
+      "options": [
+        {
+          "label": "Top",
+          "value": "top"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Bottom",
+          "value": "bottom"
+        }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "select",
+      "id": "images_overlay",
+      "label": "Images overlay",
+      "options": [
+        {
+          "label": "None",
+          "value": ""
+        },
+        {
+          "label": "Gradient",
+          "value": "gradient"
+        },
+        {
+          "label": "Full",
+          "value": "full"
+        }
+      ],
+      "default": ""
+    }
+  ],
+  "blocks": [
+    {
+      "type": "background_image",
+      "name": "Background image",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title text",
+          "default": "Example title"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_title",
+          "label": "Button title",
+          "default": "Button title"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Select a menu",
+          "default": "main-menu"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner",
+      "blocks": [
+        {
+          "type": "background_image"
+        },
+        {
+          "type": "background_image"
+        },
+        {
+          "type": "title"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

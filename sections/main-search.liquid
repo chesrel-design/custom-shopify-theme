@@ -1,0 +1,60 @@
+{{ 'component-input.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-search.css' | asset_url | stylesheet_tag }}
+
+<section class="section container">
+  <div class="section__inner">
+    <header class="section__header section__header--column">
+      <div class="section__info">
+        <h1 class="section__title h2">
+          {% if search.performed %}
+            {% if search.results_count > 0 %}
+              {{ 'search.results' | t }}
+            {% else %}
+              {{ 'search.page_title_nothing_found' | t }}
+            {% endif %}
+          {% else %}
+            {{ 'search.page_title' | t }}
+          {% endif %}
+        </h1>
+        <div class="section__description">
+          <p>
+            {% if search.performed %}
+              {{ 'search.page_description_after_search' | t: count: search.results_count, query: search.terms }}
+            {% else %}
+              {{ 'search.page_description' | t }}
+            {% endif %}
+          </p>
+        </div>
+      </div>
+      <form class="search__form" action="{{ routes.search_url }}">
+        <input
+          type="text"
+          placeholder="{{ 'search.input.placeholder' | t }}"
+          name="q"
+          value="{{ search.terms | escape }}"
+          class="search__input input"
+        >
+        <input type="hidden" name="type" value="product">
+        <input type="hidden" name="options[prefix]" value="last">
+        <button type="submit" class="search__button button bold">{{ 'search.button_text' | t }}</button>
+      </form>
+    </header>
+    {% if search.performed %}
+      {% if search.results_count > 0 %}
+        {{ 'component-product-grid.css' | asset_url | stylesheet_tag }}
+        <div class="section__body">
+          <ul class="search__results product-grid">
+            {% for result in search.results %}
+              {% case result.object_type %}
+                {% when 'product' %}
+                  <li class="search__result search__result--product">
+                    {% render 'product-card', product: result %}
+                  </li>
+              {% endcase %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>

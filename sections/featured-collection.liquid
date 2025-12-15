@@ -1,0 +1,116 @@
+{{ 'section-featured-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-product-grid.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign show_header = false
+  if section.settings.title != blank or section.settings.description != blank or section.settings.button_title != blank
+    assign show_header = true
+  endif
+%}
+
+<section class="section container">
+  {% if show_header %}
+    <header class="section__header text--ml">
+      <div class="section__info">
+        {% if section.settings.title != blank %}
+          <h2 class="section__title h2">{{ section.settings.title }}</h2>
+        {% endif %}
+        {% if section.settings.description != blank %}
+          <div class="section__description">
+            {{ section.settings.description }}
+          </div>
+        {% endif %}
+      </div>
+      {% if section.settings.button_title != blank %}
+        <a
+          href="{{ section.settings.button_link }}"
+          class="featured-collection__button button button--jumbo bold"
+          {% if section.settings.button_link == blank %}
+            disabled
+          {% endif %}
+        >
+          {{- section.settings.button_title | escape -}}
+        </a>
+      {% endif %}
+    </header>
+  {% endif %}
+  <div class="featured-collection__body section__body">
+    <ul class="featured-collection__product-list product-grid">
+      {% liquid
+        if section.settings.show_related_products and recommendations.performed?
+          assign products = recommendations.products
+        else
+          assign products = section.settings.collection.products
+        endif
+      %}
+      {% for loop_product in products limit: section.settings.product_limit %}
+        {% unless product.id == loop_product.id %}
+          <li class="featured-collection__product-item product-grid__item">
+            {% render 'product-card',
+              product: loop_product,
+              class: 'featured-collection__product-card',
+              index: forloop.index
+            %}
+          </li>
+        {% endunless %}
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection to display"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "label": "Max. products to display",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related_products",
+      "label": "Show related products",
+      "info": "If checked, products from automatic recommendations are displayed. If no recommendations are available, products from selected collection will be displayed."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Section title",
+      "default": "Example title"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Section description",
+      "default": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_title",
+      "label": "Button title",
+      "default": "Button title",
+      "info": "Leave empty to hide the button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection"
+    }
+  ]
+}
+{% endschema %}

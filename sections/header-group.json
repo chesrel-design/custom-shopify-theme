@@ -1,0 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+    "type": "header",
+    "name": "Header",
+    "sections": {
+        "header": {
+            "type": "header",
+            "name": "Header",
+            "settings": {
+                "menu": "main-menu",
+                "show_search": true,
+                "logo_width": 100
+            }
+        }
+    },
+    "order": [
+        "header"
+    ]
+}

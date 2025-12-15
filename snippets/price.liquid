@@ -1,0 +1,15 @@
+{% liquid
+  if product.price
+    if product.has_only_default_variant
+      assign price = product.price | money
+    else
+      assign from_string = 'product.price.from' | t
+      assign min_price = product.price_min | money
+      assign price = from_string | append: ' ' | append: min_price
+    endif
+  else
+    assign price = 1999 | money
+  endif
+%}
+
+<span class="price" aria-label="{{ 'a11y.price' | t }}">{{ price }}</span>

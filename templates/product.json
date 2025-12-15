@@ -1,0 +1,84 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main_product_LN6kfL": {
+      "type": "main-product",
+      "blocks": {
+        "title_mfdteC": {
+          "type": "title",
+          "settings": {}
+        },
+        "options_AagPTm": {
+          "type": "options",
+          "settings": {}
+        },
+        "quantity_selector_qkG7hb": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "atc_button_XH8CiR": {
+          "type": "atc_button",
+          "settings": {}
+        },
+        "description_VcxnLe": {
+          "type": "description",
+          "settings": {}
+        },
+        "collapsible_row_BmeVFG": {
+          "type": "collapsible_row",
+          "settings": {
+            "title": "Example question",
+            "text": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>",
+            "open": false
+          }
+        },
+        "collapsible_row_PanYTf": {
+          "type": "collapsible_row",
+          "settings": {
+            "title": "Example question",
+            "text": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "title_mfdteC",
+        "options_AagPTm",
+        "quantity_selector_qkG7hb",
+        "atc_button_XH8CiR",
+        "description_VcxnLe",
+        "collapsible_row_BmeVFG",
+        "collapsible_row_PanYTf"
+      ],
+      "name": "Product info",
+      "settings": {
+        "square_current_image": false
+      }
+    },
+    "featured_collection_AktxQ": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "collection": "frontpage",
+        "product_limit": 8,
+        "show_related_products": true,
+        "title": "Often bought with...",
+        "description": "",
+        "button_title": "See full catalog",
+        "button_link": "shopify://collections/all"
+      }
+    }
+  },
+  "order": [
+    "main_product_LN6kfL",
+    "featured_collection_AktxQ"
+  ]
+}

@@ -1,0 +1,59 @@
+{% comment %}
+  uses default shopify image rendering functionality.
+  used for simpler image rendering.
+
+  accepts:
+  image image-object,
+  width int optional,
+  height int optional,
+  widths string optional,
+  sizes string optional,
+  fetch_priority optional,
+  link_only optional
+{% endcomment %}
+
+{% if image %}
+  {% liquid
+    unless width
+      assign width = image.width
+    endunless
+
+    unless height
+      assign height = width | divided_by: image.aspect_ratio
+    endunless
+
+    unless widths
+      assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+    endunless
+
+    unless sizes
+      assign sizes = '100vw'
+    endunless
+
+    unless fetch_priority
+      if section.index == 1
+        assign fetch_priority = 'high'
+      else
+        assign fetch_priority = 'auto'
+      endif
+    endunless
+  %}
+
+  {% if link_only %}
+    {{ image | image_url: width: 3840 }}
+  {% else %}
+    {{
+      image
+      | image_url: width: 3840
+      | image_tag:
+        width: width,
+        height: height,
+        sizes: sizes,
+        widths: widths,
+        alt: image.alt,
+        fetchpriority: fetch_priority
+    }}
+  {% else %}
+    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+  {% endif %}
+{% endif %}

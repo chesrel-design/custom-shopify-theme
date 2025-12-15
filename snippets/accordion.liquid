@@ -1,0 +1,33 @@
+{% comment %}
+  renders a single accordion.
+
+  accepts:
+  title string,
+  text string,
+  class string,
+  is_open boolean,
+  is_first boolean
+
+  note: stylesheet is moved into the accordion to allow adjacent css selectors
+{% endcomment %}
+
+<div class="{{ class }} accordion {% if is_first %}accordion--first{% endif %}">
+  {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+
+  <details
+    class="accordion__inner container"
+    {% if is_open %}
+      open
+    {% endif %}
+  >
+    <summary class="accordion__header">
+      <h3 class="accordion__title">{{ title }}</h3>
+      <div class="accordion__open-indicator-wrapper">
+        <div class="accordion__open-indicator"></div>
+      </div>
+    </summary>
+    <div class="accordion__body">
+      {{ text }}
+    </div>
+  </details>
+</div>

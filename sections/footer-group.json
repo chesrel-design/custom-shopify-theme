@@ -1,0 +1,62 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "text_column_Lg4ENM": {
+          "type": "text_column",
+          "settings": {
+            "title": "Your brand title",
+            "text": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+          }
+        },
+        "menu_WW9RBT": {
+          "type": "menu",
+          "settings": {
+            "title": "Menu title",
+            "menu": "main-menu"
+          }
+        },
+        "menu_xzRmMa": {
+          "type": "menu",
+          "settings": {
+            "title": "Quick links",
+            "menu": "main-menu"
+          }
+        },
+        "menu_FJdAGy": {
+          "type": "menu",
+          "settings": {
+            "title": "Resources",
+            "menu": "main-menu"
+          }
+        }
+      },
+      "block_order": [
+        "text_column_Lg4ENM",
+        "menu_WW9RBT",
+        "menu_xzRmMa",
+        "menu_FJdAGy"
+      ],
+      "name": "Footer",
+      "settings": {
+        "show_social": true,
+        "show_store_title": true
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

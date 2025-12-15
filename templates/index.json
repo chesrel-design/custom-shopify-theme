@@ -1,0 +1,263 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner_jzNBqA": {
+      "type": "banner",
+      "blocks": {
+        "background_image_j4gFwb": {
+          "type": "background_image",
+          "settings": {
+            "image": "shopify://shop_images/upscaled-hero.jpg"
+          }
+        },
+        "title_VK7faD": {
+          "type": "title",
+          "settings": {
+            "title": "Hero section title"
+          }
+        },
+        "text_njbKAk": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+          }
+        },
+        "button_3kALbr": {
+          "type": "button",
+          "settings": {
+            "button_title": "See catalog",
+            "button_link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "background_image_j4gFwb",
+        "title_VK7faD",
+        "text_njbKAk",
+        "button_3kALbr"
+      ],
+      "name": "Banner",
+      "settings": {
+        "banner_height": "tall",
+        "smaller_on_mobile": false,
+        "center_all_content": false,
+        "vertical_container_alignment": "bottom",
+        "center_menus": false,
+        "vertical_menus_alignment": "top",
+        "images_overlay": "gradient"
+      }
+    },
+    "banner_hPnnQr": {
+      "type": "banner",
+      "blocks": {
+        "background_image_LUbe46": {
+          "type": "background_image",
+          "settings": {
+            "image": "shopify://shop_images/ce1e16c5abcbfd6aa872f8bbb49a06c4_1.jpg"
+          }
+        },
+        "background_image_RGAWf3": {
+          "type": "background_image",
+          "settings": {
+            "image": "shopify://shop_images/2ec1dcb1e68bd1bf2ea55a0312065efd_1.jpg"
+          }
+        },
+        "menu_myakJm": {
+          "type": "menu",
+          "settings": {
+            "menu": "main-menu"
+          }
+        },
+        "menu_8Xmbd4": {
+          "type": "menu",
+          "settings": {
+            "menu": "main-menu"
+          }
+        },
+        "title_RNXXRi": {
+          "type": "title",
+          "settings": {
+            "title": "Summer Collection"
+          }
+        },
+        "text_4L4yYF": {
+          "type": "text",
+          "settings": {
+            "text": "<p>2025</p>"
+          }
+        }
+      },
+      "block_order": [
+        "background_image_LUbe46",
+        "background_image_RGAWf3",
+        "menu_myakJm",
+        "menu_8Xmbd4",
+        "title_RNXXRi",
+        "text_4L4yYF"
+      ],
+      "name": "Banner",
+      "settings": {
+        "banner_height": "tall",
+        "smaller_on_mobile": false,
+        "center_all_content": true,
+        "vertical_container_alignment": "bottom",
+        "center_menus": false,
+        "vertical_menus_alignment": "top",
+        "images_overlay": "full"
+      }
+    },
+    "featured_collection_7TUPhN": {
+      "type": "featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "collection": "frontpage",
+        "product_limit": 8,
+        "show_related_products": false,
+        "title": "Featured collection",
+        "description": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>",
+        "button_title": "See full collection",
+        "button_link": "shopify://collections/frontpage"
+      }
+    },
+    "rich_text_WENCHx": {
+      "type": "rich-text",
+      "blocks": {
+        "title_jeBYz4": {
+          "type": "title",
+          "settings": {
+            "title": "Your brand story"
+          }
+        },
+        "text_EhXwWK": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+          }
+        },
+        "button_XxqJfL": {
+          "type": "button",
+          "settings": {
+            "button_title": "Our products",
+            "button_link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "title_jeBYz4",
+        "text_EhXwWK",
+        "button_XxqJfL"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "split_columns": true,
+        "center": false
+      }
+    },
+    "collapsible_content_ieQWwQ": {
+      "type": "collapsible-content",
+      "blocks": {
+        "accordion_iF9Kdx": {
+          "type": "accordion",
+          "settings": {
+            "title": "Example question title",
+            "text": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+          }
+        },
+        "accordion_aiaENP": {
+          "type": "accordion",
+          "settings": {
+            "title": "Example question title",
+            "text": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+          }
+        },
+        "accordion_jRkwAd": {
+          "type": "accordion",
+          "settings": {
+            "title": "Example question title",
+            "text": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+          }
+        },
+        "accordion_THidRC": {
+          "type": "accordion",
+          "settings": {
+            "title": "Example question title",
+            "text": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_iF9Kdx",
+        "accordion_aiaENP",
+        "accordion_jRkwAd",
+        "accordion_THidRC"
+      ],
+      "name": "Collapsible content",
+      "settings": {
+        "title": "FAQs & Answers",
+        "description": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>",
+        "button_title": "Contact us",
+        "button_link": "/",
+        "open_first": false
+      }
+    },
+    "marquee_VMmyNQ": {
+      "type": "marquee",
+      "blocks": {
+        "marquee_item_Q3dVkn": {
+          "type": "marquee_item",
+          "settings": {
+            "title": "Short phrase about your brand",
+            "link_address": ""
+          }
+        },
+        "marquee_item_7TxHfe": {
+          "type": "marquee_item",
+          "settings": {
+            "title": "Example link",
+            "link_address": "/"
+          }
+        },
+        "marquee_item_Rfwhw3": {
+          "type": "marquee_item",
+          "settings": {
+            "title": "Short phrase about your brand",
+            "link_address": ""
+          }
+        },
+        "marquee_item_H9Kw4T": {
+          "type": "marquee_item",
+          "settings": {
+            "title": "Example link",
+            "link_address": "/"
+          }
+        }
+      },
+      "block_order": [
+        "marquee_item_Q3dVkn",
+        "marquee_item_7TxHfe",
+        "marquee_item_Rfwhw3",
+        "marquee_item_H9Kw4T"
+      ],
+      "name": "Marquee",
+      "settings": {
+        "padding": "no-top"
+      }
+    }
+  },
+  "order": [
+    "banner_jzNBqA",
+    "banner_hPnnQr",
+    "featured_collection_7TUPhN",
+    "rich_text_WENCHx",
+    "collapsible_content_ieQWwQ",
+    "marquee_VMmyNQ"
+  ]
+}

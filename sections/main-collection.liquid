@@ -1,0 +1,64 @@
+{{ 'section-main-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-product-grid.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign show_header = false
+  if collection.title != blank or collection.description != blank
+    if section.settings.show_title or section.settings.show_description
+      assign show_header = true
+    endif
+  endif
+%}
+
+<section class="section container">
+  {% if show_header %}
+    <header class="section__header text--ml">
+      <div class="section__info">
+        <h2 class="section__title h2">{{ collection.title }}</h2>
+        {% if collection.description != blank %}
+          <div class="section__description">
+            {{ collection.description }}
+          </div>
+        {% endif %}
+      </div>
+    </header>
+  {% endif %}
+  <div class="collection__body section__body">
+    {% if collection.products != blank %}
+      <ul class="collection__product-list product-grid">
+        {% for loop_product in collection.products %}
+          <li class="collection__product-item product-grid__item">
+            {% render 'product-card', product: loop_product, class: 'collection__product-card', index: forloop.index %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <h2 class="h2">{{ 'collection.empty' | t }}</h2>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show collection title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection"
+    }
+  ]
+}
+{% endschema %}

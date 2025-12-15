@@ -1,0 +1,154 @@
+{{ 'section-header.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sticky-header.js' | asset_url }}" defer type="module"></script>
+
+<header class="header" id="sticky-header">
+  {% if request.page_type == 'index' %}
+    <h1 class="visually-hidden">{{ shop.name }}</h1>
+  {% endif %}
+  <div class="header__inner container">
+    <div class="header__main">
+      <button
+        class="header__button header__button--menu button button--icon hidden-desktop"
+        onclick="document.getElementById('headerMenuDrawer').showModal()"
+      >
+        <span class="visually-hidden">{{ 'a11y.navigation.nav_menu.open' | t }}</span>
+        <div class="svg-wrapper">
+          {{ 'icon-menu.svg' | inline_asset_content }}
+        </div>
+      </button>
+      <a class="header__logo" href="{{ routes.root_url }}">
+        {% if settings.logo != blank %}
+          {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+          {%- assign logo_height = section.settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+          {% capture sizes %}(max-width: {{ section.settings.logo_width | times: 2 }}px) 50vw, {{ section.settings.logo_width }}px{% endcapture %}
+          {% capture widths %}{{ section.settings.logo_width }}, {{ section.settings.logo_width | times: 1.5 | round }}, {{ section.settings.logo_width | times: 2 }}{% endcapture %}
+          {{
+            settings.logo
+            | image_url: width: 600
+            | image_tag:
+              widths: widths,
+              height: logo_height,
+              width: section.settings.logo_width,
+              alt: logo_alt,
+              sizes: sizes,
+              preload: true
+          }}
+        {% else %}
+          <span class="header__logo-title h2 italic bold lh100">{{ shop.name }}</span>
+        {% endif %}
+      </a>
+      {% if section.settings.menu != blank %}
+        <nav class="header__menu visible-desktop">
+          <ul class="header__menu-list menu-list">
+            {% for link in section.settings.menu.links %}
+              <li class="header__menu-item menu-list__item">
+                <a
+                  href="{{ link.url }}"
+                  class="
+                    header__menu-link menu-list__menu-link link lh100
+                    {% if link.current %}
+                        header__menu-link--active menu-list__menu-link--active link--active
+                      {% endif %}
+                  "
+                >
+                  <span>
+                    {{- link.title | escape -}}
+                  </span>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
+    </div>
+    <div class="header__actions">
+      {% if section.settings.show_search %}
+        <a
+          href="{{ routes.search_url }}"
+          class="header__button button button--icon"
+        >
+          <span class="visually-hidden">{{ 'a11y.open_search' | t }}</span>
+          <div class="svg-wrapper">
+            {{ 'icon-search.svg' | inline_asset_content }}
+          </div>
+        </a>
+      {% endif %}
+      {%- if shop.customer_accounts_enabled -%}
+        <a
+          href="
+            {% if customer %}
+                {{ routes.account_url }}
+            {% else %}
+                {{ routes.account_login_url }}
+            {% endif %}
+          "
+          class="header__button button button--icon visible-desktop"
+        >
+          <div class="svg-wrapper">
+            <span class="visually-hidden">{{ 'account.go_to_account' | t }}</span>
+            {{ 'icon-user.svg' | inline_asset_content }}
+          </div>
+        </a>
+      {%- endif -%}
+      <a
+        href="{{ routes.cart_url }}"
+        class="header__cart-button header__button button button--icon"
+      >
+        <div class="svg-wrapper">
+          {{ 'icon-cart.svg' | inline_asset_content }}
+        </div>
+        {% if cart.item_count > 0 %}
+          <div class="header__cart-button-indicator">
+            <span aria-hidden="true">{{ cart.item_count }}</span>
+            <span class="visually-hidden">{{ 'cart.n_items_in_cart' | t: quantity: cart.item_count }}</span>
+          </div>
+        {% endif %}
+      </a>
+    </div>
+  </div>
+</header>
+
+{% render 'drawer-menu' %}
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "sticky-header-group",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Select a menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "default": 100,
+      "unit": "px",
+      "label": "Logo width"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_socials_in_drawer",
+      "label": "Show social media icons in menu drawer on mobile",
+      "info": "Populate social media links in theme settings",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}

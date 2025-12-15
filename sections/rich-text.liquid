@@ -1,0 +1,137 @@
+{{ 'section-rich-text.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign has_buttons = false
+  for block in section.blocks
+    if block.type == 'button' and block.settings.button_title != blank
+      assign has_buttons = true
+    endif
+  endfor
+%}
+
+<section
+  class="
+    rich-text
+    {% if section.settings.split_columns %}rich-text--split{% endif %}
+    {% if section.settings.center %}rich-text--center{% endif %}
+    section container text--ml
+  "
+>
+  <div class="rich-text__inner">
+    {% for block in section.blocks %}
+      {% if block.type == 'title' %}
+        <h2 class="rich-text__title h3">{{ block.settings.title }}</h2>
+      {% endif %}
+    {% endfor %}
+
+    <div class="rich-text__main-content">
+      {% for block in section.blocks %}
+        {% if block.type == 'text' %}
+          <div class="rich-text__text">{{ block.settings.text }}</div>
+        {% endif %}
+      {% endfor %}
+
+      {% if has_buttons %}
+        <div class="rich-text__buttons">
+          {% for block in section.blocks %}
+            {% if block.type == 'button' and block.settings.button_title != blank %}
+              <a
+                href="{{ block.settings.button_link }}"
+                class="rich-text__button button bold"
+                {% if block.settings.button_link == blank %}
+                  disabled
+                {% endif %}
+              >
+                {{- block.settings.button_title | escape -}}
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "split_columns",
+      "label": "Split section into 2 columns",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "center",
+      "label": "Center all content",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title text",
+          "default": "Example title"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_title",
+          "label": "Button title",
+          "default": "Button title"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text",
+      "settings": {
+        "split_columns": true
+      },
+      "blocks": [
+        {
+          "type": "title"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

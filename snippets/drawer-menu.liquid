@@ -1,0 +1,97 @@
+{% comment %}
+  Renders a header drawer menu for mobile and tablet.
+
+  Usage:
+  {% render 'drawer-menu' %}
+{% endcomment %}
+
+{{ 'component-drawer-menu.css' | asset_url | stylesheet_tag }}
+
+<dialog id="headerMenuDrawer" class="drawer-menu dialog hidden-desktop">
+  <header class="drawer-menu__header">
+    <form class="display-contents" method="dialog">
+      <button class="drawer-menu__close-button button button--icon" type="submit">
+        <div class="svg-wrapper">
+          {{ 'icon-cross.svg' | inline_asset_content }}
+        </div>
+        <span class="visually-hidden">{{ 'a11y.navigation.nav_menu.close' | t }}</span>
+      </button>
+    </form>
+    <a href="{{ routes.root_url }}" class="drawer-menu__logo">
+      {% if settings.logo != blank %}
+        {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+        {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+        {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width | times: 0.75 }}px{% endcapture %}
+        {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+        {{
+          settings.logo
+          | image_url: width: 600
+          | image_tag:
+            widths: widths,
+            height: logo_height,
+            width: settings.logo_width,
+            alt: logo_alt,
+            sizes: sizes,
+            preload: true
+        }}
+      {% else %}
+        <span class="drawer-menu__logo-title h3 italic bold lh100">{{ shop.name }}</span>
+      {% endif %}
+    </a>
+  </header>
+  <div class="drawer-menu__body">
+    {% if section.settings.menu != blank %}
+      <nav class="drawer-menu__menu">
+        <ul class="drawer-menu__menu-list menu-list menu-list--vertical">
+          {% for link in section.settings.menu.links %}
+            <li class="drawer-menu__menu-item menu-list__item">
+              <a
+                href="{{ link.url }}"
+                class="
+                  drawer-menu__menu-link menu-list__menu-link link lh100
+                  {% if link.current %}
+                      drawer-menu__menu-link--active menu-list__menu-link--active link--active
+                    {% endif %}
+                "
+              >
+                <span>
+                  {{- link.title | escape -}}
+                </span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    {% endif %}
+  </div>
+  <footer class="drawer-menu__footer">
+    {%- if shop.customer_accounts_enabled -%}
+      <a
+        href="
+          {% if customer %}
+              {{ routes.account_url }}
+          {% else %}
+              {{ routes.account_login_url }}
+          {% endif %}
+        "
+        class="drawer-menu__account-link"
+      >
+        <div class="drawer-menu__account-link-icon">
+          <div class="svg-wrapper">
+            {{ 'icon-user.svg' | inline_asset_content }}
+          </div>
+        </div>
+        <span class="drawer-menu__account-link-text">
+          {% if customer %}
+            {{ 'account.log_in' | t }}
+          {% else %}
+            {{ 'account.go_to_account' | t }}
+          {% endif %}
+        </span>
+      </a>
+    {%- endif -%}
+    {% if section.settings.show_socials_in_drawer %}
+      {% render 'social-icons' class: 'drawer-menu__social-icons' %}
+    {% endif %}
+  </footer>
+</dialog>

@@ -1,0 +1,132 @@
+{{ 'section-footer.css' | asset_url | stylesheet_tag }}
+
+<footer class="footer">
+  <div class="footer__inner section container">
+    <div class="footer__columns text--ml">
+      {% for block in section.blocks %}
+        <div class="footer__column">
+          {% case block.type %}
+            {% when 'text_column' %}
+              <h3 class="footer__column-title text--l">
+                {{ block.settings.title }}
+              </h3>
+              <div class="footer__column-text">
+                {{ block.settings.text }}
+              </div>
+            {% when 'menu' %}
+              <h3 class="footer__column-title text--l">
+                {{ block.settings.title }}
+              </h3>
+              <nav class="footer__column-menu">
+                <ul class="footer__column-menu-list menu-list menu-list--vertical">
+                  {% for link in block.settings.menu.links %}
+                    <li class="footer__column-menu-item menu-list__item">
+                      <a
+                        href="{{ link.address }}"
+                        class="footer__column-menu-link menu-list__link link {% if link.current %}link--active{% endif %}"
+                      >
+                        {{- link.title | escape -}}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </nav>
+          {% endcase %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="footer__extra">
+      <span class="footer__copyright">{{ 'now' | date: '%Y' }}. &copy;{{ shop.name | escape }}
+        <br>
+        Site by <a href="https://chesrel-design.com" class="footer__copyright-link link link--active" target="_blank">ChesrelDesign</a>
+    </span>
+      {% if section.settings.show_social %}
+        {% render 'social-icons' class: 'footer__social-icons' %}
+      {% endif %}
+    </div>
+  </div>
+  {% if section.settings.show_store_title %}
+    <div class="footer__jumbo-title-wrapper hidden-mobile">
+      <script src="{{ 'jumbo-title.js' | asset_url }}" defer type="module"></script>
+      <span class="footer__jumbo-title" aria-hidden="true">{{ shop.name | escape }}</span>
+    </div>
+  {% endif %}
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_store_title",
+      "label": "Show store title",
+      "default": true,
+      "info": "Hidden on mobile"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Text column",
+      "type": "text_column",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Column title",
+          "default": "Example title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Column text",
+          "default": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+        }
+      ]
+    },
+    {
+      "name": "Menu",
+      "type": "menu",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Column title",
+          "default": "Example title"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Select a menu",
+          "default": "main-menu"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        {
+          "type": "text_column"
+        },
+        {
+          "type": "menu"
+        },
+        {
+          "type": "menu"
+        },
+        {
+          "type": "menu"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

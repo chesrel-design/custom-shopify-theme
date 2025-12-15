@@ -1,0 +1,108 @@
+{{ 'section-marquee.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'endless-marquee.js' | asset_url }}" defer type="module"></script>
+
+<section class="marquee marquee--{{ section.settings.padding }}-padding section">
+  <ul class="marquee__list">
+    {% for block in section.blocks %}
+      <li class="marquee__item">
+        {% if block.settings.link_address %}
+          <a href="{{ block.settings.link_address }}" class="marquee__item-text marquee__item-text--link link link--underlined">
+            {{- block.settings.title -}}
+          </a>
+          <div class="marquee__item-icon">
+            <div class="svg-wrapper">
+              {{ 'icon-arrow.svg' | inline_asset_content }}
+            </div>
+          </div>
+        {% else %}
+          <span class="marquee__item-text">{{ block.settings.title }}</span>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% schema %}
+{
+  "name": "Marquee",
+  "settings": [
+    {
+      "type": "select",
+      "id": "padding",
+      "label": "Marquee padding",
+      "options": [
+        {
+          "label": "Normal",
+          "value": "normal"
+        },
+        {
+          "label": "No top padding",
+          "value": "no-top"
+        },
+        {
+          "label": "No bottom padding",
+          "value": "no-bottom"
+        },
+        {
+          "label": "No padding",
+          "value": "no"
+        }
+      ],
+      "default": "normal"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "marquee_item",
+      "name": "Marquee item",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Item title",
+          "default": "Example title"
+        },
+        {
+          "type": "url",
+          "id": "link_address",
+          "label": "Link address",
+          "info": "Leave empty to render item as regular text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee",
+      "blocks": [
+        {
+          "type": "marquee_item",
+          "settings": {
+            "title": "Lorem ipsum dolor cit amet"
+          }
+        },
+        {
+          "type": "marquee_item",
+          "settings": {
+            "title": "Example link",
+            "link_address": "/"
+          }
+        },
+        {
+          "type": "marquee_item",
+          "settings": {
+            "title": "Lorem ipsum dolor cit amet"
+          }
+        },
+        {
+          "type": "marquee_item",
+          "settings": {
+            "title": "Example link",
+            "link_address": "/"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

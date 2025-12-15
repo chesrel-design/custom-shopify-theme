@@ -1,0 +1,407 @@
+<script src="{{ 'select-product-variant.js' | asset_url }}" defer type="module"></script>
+<script src="{{ 'product-media.js' | asset_url }}" type="module" defer></script>
+<script src="{{ 'product-quantity.js' | asset_url }}" defer type="module"></script>
+{{ 'section-main-product.css' | asset_url | stylesheet_tag }}
+{{ 'component-quantity-selector.css' | asset_url | stylesheet_tag }}
+
+<section class="product section container">
+  <div class="product__inner">
+    <div class="product__images" data-product-images-container="">
+      <div class="product__thumbnails" data-product-images-thumbnails="">
+        <button
+          class="product__thumbnails-button product__thumbnails-button--first button button--icon display-none"
+          type="button"
+          data-product-images-thumbnails-button="first"
+          aria-label="{{ 'product.media.previous' | t }}"
+          aria-controls="product-thumbnails-{{ section.id }}"
+        >
+          <div class="product__thumbnails-button-icon">
+            <div class="svg-wrapper">
+              {{ 'icon-chevron.svg' | inline_asset_content }}
+            </div>
+          </div>
+        </button>
+        <ul
+          class="product__thumbnails-list"
+          data-product-images-thumbnails-list=""
+          id="product-thumbnails-{{ section.id }}"
+        >
+          {% for media in product.media %}
+            <li class="product__thumbnail">
+              <button
+                class="product__thumbnail-image reset-button img-cover"
+                type="button"
+                data-media-id="{{ media.id }}"
+                data-product-thumbnail
+                aria-label="{{ media.alt | default: 'View product media option' | escape }}"
+              >
+                {% if media.media_type == 'image' %}
+                  {% render 'image', image: media %}
+                {% elsif media.media_type == 'video' %}
+                  {% render 'image', image: media.preview_image %}
+                {% endif %}
+              </button>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <button
+          class="product__thumbnails-button product__thumbnails-button--second button button--icon display-none"
+          type="button"
+          data-product-images-thumbnails-button="second"
+          aria-label="{{ 'product.media.next' | t }}"
+          aria-controls="product-thumbnails-{{ section.id }}"
+        >
+          <div class="product__thumbnails-button-icon">
+            <div class="svg-wrapper">
+              {{ 'icon-chevron.svg' | inline_asset_content }}
+            </div>
+          </div>
+        </button>
+      </div>
+      <div class="product__current-image-wrapper" data-product-images-current-image-wrapper="">
+        {% liquid
+          capture image_tag
+            if product.featured_media
+              render 'image', image: product.featured_media
+            elsif product.featured_image
+              render 'image', image: product.featured_image
+            endif
+          endcapture
+        %}
+        <button
+          class="product__current-image-zoom-button button button--icon"
+          data-open-zoom-button=""
+          data-open-zoom-image-tag="{{ image_tag | escape }}"
+          type="button"
+        >
+          <div class="svg-wrapper">
+            {{ 'icon-zoom-in.svg' | inline_asset_content }}
+          </div>
+          <span class="visually-hidden">
+            {{- 'a11y.zoom.product_featured_image' | t: product_title: product.title -}}
+          </span>
+        </button>
+        <div
+          class="product__current-image {% if section.settings.square_current_image %}product__current-image--square img-cover{% else %} img-contain{% endif %}"
+          {% if product.featured_media %}
+            data-media-id="{{ product.featured_media.id }}"
+          {% endif %}
+        >
+          {{ image_tag }}
+        </div>
+      </div>
+    </div>
+    <div class="product__info">
+      {% liquid
+        assign selected_variant = product.selected_or_first_available_variant
+        if selected_variant == null
+          assign selected_variant = product.variants.first
+        endif
+        assign is_variant_available = false
+        if selected_variant and selected_variant.available
+          assign is_variant_available = true
+        endif
+      %}
+      {% form 'product', product, class: 'display-contents', data-product-form: '' %}
+        {% if selected_variant %}
+          <input type="hidden" name="id" value="{{ selected_variant.id }}" data-variant-id-input>
+        {% endif %}
+
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'title' %}
+              <h1 class="product__title h3">{{ product.title }}</h1>
+            {% when 'options' %}
+              {% for option in product.options_with_values %}
+                {% case option.name %}
+                  {% when 'Size' %}
+                    {% assign option_index = option.position | minus: 1 %}
+                    <div class="product__field">
+                      <fieldset
+                        class="display-contents"
+                        data-product-option-fieldset
+                        data-option-position="{{ option.position }}"
+                        data-option-name="{{ option.name }}"
+                      >
+                        <legend class="product__field-label">{{ 'product.choose_size' | t }}</legend>
+                        <div
+                          class="product__size"
+                          data-product-option-group
+                          data-option-position="{{ option.position }}"
+                        >
+                          {% for value in option.values %}
+                            {% assign is_selected = false %}
+                            {% if selected_variant and selected_variant.options[option_index] == value %}
+                              {% assign is_selected = true %}
+                            {% endif %}
+                            <label
+                              class="product__size-option"
+                              data-option-item
+                              data-option-value="{{ value | escape }}"
+                              data-selected-class="product__size-option--selected"
+                              data-disabled-class="product__size-option--disabled"
+                            >
+                              <span class="product__size-option-value">{{ value }}</span>
+                              <input
+                                type="radio"
+                                name="options[{{ option.position }}]"
+                                value="{{ value | escape }}"
+                                class="visually-hidden"
+                                data-option-position="{{ option.position }}"
+                                {% if is_selected %}
+                                  checked
+                                {% endif %}
+                              >
+                            </label>
+                          {% endfor %}
+                        </div>
+                      </fieldset>
+                    </div>
+                  {% when 'Color' %}
+                    {% assign option_index = option.position | minus: 1 %}
+                    <div class="product__field">
+                      <fieldset
+                        class="display-contents"
+                        data-product-option-fieldset
+                        data-option-position="{{ option.position }}"
+                        data-option-name="{{ option.name }}"
+                      >
+                        <legend class="product__field-label">{{ 'product.choose_color' | t }}</legend>
+                        <div
+                          class="product__color"
+                          data-product-option-group
+                          data-option-position="{{ option.position }}"
+                        >
+                          {% for value in option.values %}
+                            {% assign variant_for_value = null %}
+                            {% for variant in product.variants %}
+                              {% if variant.options[option_index] == value %}
+                                {% assign variant_for_value = variant %}
+                                {% break %}
+                              {% endif %}
+                            {% endfor %}
+                            {% assign is_selected = false %}
+                            {% if selected_variant and selected_variant.options[option_index] == value %}
+                              {% assign is_selected = true %}
+                            {% endif %}
+                            <label
+                              class="product__color-option"
+                              data-option-item
+                              data-option-value="{{ value | escape }}"
+                              data-selected-class="product__color-option--selected"
+                              data-disabled-class="product__color-option--disabled"
+                            >
+                              <span class="visually-hidden">{{ value }}</span>
+                              <input
+                                type="radio"
+                                name="options[{{ option.position }}]"
+                                value="{{ value | escape }}"
+                                class="visually-hidden"
+                                data-option-position="{{ option.position }}"
+                                {% if is_selected %}
+                                  checked
+                                {% endif %}
+                              >
+                              <div class="product__color-option-image img-cover">
+                                {% if variant_for_value and variant_for_value.featured_media %}
+                                  {% render 'image', image: variant_for_value.featured_media %}
+                                {% elsif variant_for_value and variant_for_value.featured_image %}
+                                  {% render 'image', image: variant_for_value.featured_image %}
+                                {% elsif product.featured_media %}
+                                  {% render 'image', image: product.featured_media %}
+                                {% else %}
+                                  {% render 'image', image: product.featured_image %}
+                                {% endif %}
+                              </div>
+                            </label>
+                          {% endfor %}
+                        </div>
+                      </fieldset>
+                    </div>
+                {% endcase %}
+              {% endfor %}
+            {% when 'quantity_selector' %}
+              <label class="product__field">
+                <span class="product__field-label">{{ 'product.quantity' | t }}</span>
+                <div class="product__quantity-selector quantity-selector" data-quantity-selector>
+                  <input type="number" name="quantity" min="1" value="1" class="visually-hidden" data-quantity-input>
+                  <button
+                    class="product__quantity-selector-button quantity-selector__button button button--icon"
+                    type="button"
+                    data-quantity-button="decrease"
+                  >
+                    <span class="visually-hidden">{{ 'product.minus_item' | t }}</span>
+                    <div class="svg-wrapper">
+                      {{ 'icon-minus.svg' | inline_asset_content }}
+                    </div>
+                  </button>
+                  <span
+                    class="product__quantity-selector-indicator quantity-selector__indicator"
+                    aria-hidden="true"
+                    data-quantity-indicator
+                    >1</span
+                  >
+                  <button
+                    class="product__quantity-selector-button quantity-selector__button button button--icon"
+                    type="button"
+                    data-quantity-button="increase"
+                  >
+                    <span class="visually-hidden">{{ 'product.plus_item' | t }}</span>
+                    <div class="svg-wrapper">
+                      {{ 'icon-plus.svg' | inline_asset_content }}
+                    </div>
+                  </button>
+                </div>
+              </label>
+            {% when 'atc_button' %}
+              <div class="text--ml display-contents">
+                <button
+                  type="submit"
+                  class="product__atc-button button button--jumbo bold{% unless is_variant_available %} product__atc-button--disabled{% endunless %}"
+                  data-product-atc-button
+                  data-available-text="{{ 'product.cart.add' | t | escape }}"
+                  data-unavailable-text="{{ 'product.sold_out' | t | escape }}"
+                  data-disabled-class="product__atc-button--disabled"
+                  {% unless is_variant_available %}
+                    disabled aria-disabled="true"
+                  {% endunless %}
+                >
+                  <span data-product-atc-text>
+                    {% if is_variant_available %}
+                      {{ 'product.cart.add' | t }}
+                    {% else %}
+                      {{ 'product.sold_out' | t }}
+                    {% endif %}
+                  </span>
+                  <span aria-hidden="true">&nbsp;|&nbsp;</span>
+                  <span class="product__atc-button-price">
+                    {% if selected_variant %}
+                      {{ selected_variant.price | money }}
+                    {% else %}
+                      {{ product.price | money }}
+                    {% endif %}
+                  </span>
+                </button>
+              </div>
+            {% when 'description' %}
+              <div class="product__description">{{ product.description }}</div>
+            {% when 'collapsible_row' %}
+              {% render 'accordion',
+                class: 'product__accordion accordion--small',
+                title: block.settings.title,
+                text: block.settings.text,
+                is_open: block.settings.open
+              %}
+          {% endcase %}
+        {% endfor %}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+<div
+  class="visually-hidden"
+  aria-hidden="true"
+  id="product-variants"
+  data-money-format="{{ shop.money_format | strip_html | escape }}"
+>
+  {{ product.variants | json }}
+</div>
+
+{% schema %}
+{
+  "name": "Product info",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "square_current_image",
+      "label": "Make the current image square",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title",
+      "name": "Product title",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "options",
+      "name": "Product options",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "quantity_selector",
+      "name": "Quantity selector",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "atc_button",
+      "name": "Add to cart button",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "description",
+      "name": "Product description",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "collapsible_row",
+      "name": "Collapsible row",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Row title",
+          "default": "Example row title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Row content",
+          "default": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Open the row"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product info",
+      "blocks": [
+        {
+          "type": "title"
+        },
+        {
+          "type": "options"
+        },
+        {
+          "type": "quantity_selector"
+        },
+        {
+          "type": "atc_button"
+        },
+        {
+          "type": "description"
+        },
+        {
+          "type": "collapsible_row"
+        },
+        {
+          "type": "collapsible_row"
+        },
+      ]
+    }
+  ]
+}
+{% endschema %}

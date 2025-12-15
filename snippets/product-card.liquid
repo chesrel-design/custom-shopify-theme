@@ -1,0 +1,46 @@
+{% comment %}
+  renders a product card with a given parameter
+
+  accepts:
+  product object
+  class string optional
+  {% endcomment %}
+
+{{ 'component-product-card.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="
+    product-card
+    {% if class %}{{ class }}{% endif %}
+  "
+>
+  <a href="{{ product.url | default: routes.root_url }}" class="product-card__link"
+    ><span class="visually-hidden">{{ 'a11y.product.link' | t }}</span></a
+  >
+  <div class="product-card__media">
+    <div class="product-card__image img-cover">
+      {% render 'image', image: product.featured_image %}
+    </div>
+    {% if product.featured_image %}
+      {% liquid
+        capture image_tag
+          render 'image', image: product.featured_image
+        endcapture
+      %}
+      <button
+        class="product-card__zoom-button button button--icon"
+        data-open-zoom-button=""
+        data-open-zoom-image-tag="{{ image_tag | escape }}"
+      >
+        <div class="svg-wrapper">
+          {{ 'icon-zoom-in.svg' | inline_asset_content }}
+        </div>
+        <span class="visually-hidden">{{ 'a11y.zoom.product_featured_image' | t: product_title: product.title }}</span>
+      </button>
+    {% endif %}
+  </div>
+  <div class="product-card__info">
+    <h3 class="product-card__title text--ml bold">{{ product.title | default: 'Example product title' }}</h3>
+    {% render 'price', product: product %}
+  </div>
+</div>

@@ -1,0 +1,137 @@
+{{ 'section-collapsible-content.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign show_header = false
+  if section.settings.title != blank or section.settings.description != blank or section.settings.button_title != blank
+    assign show_header = true
+  endif
+%}
+
+<section class="collapsible-content section">
+  {% if show_header %}
+    <header class="section__header container text--ml">
+      <div class="section__info">
+        {% if section.settings.title %}
+          <h2 class="section__title h2">{{ section.settings.title }}</h2>
+        {% endif %}
+        {% if section.settings.description %}
+          <div class="section__description">
+            {{ section.settings.description }}
+          </div>
+        {% endif %}
+      </div>
+      {% if section.settings.button_title != blank %}
+        <a
+          href="{{ section.settings.button_link }}"
+          class="collapsible-content__button button button--jumbo bold"
+          {% if section.settings.button_link == blank %}
+            disabled
+          {% endif %}
+        >
+          {{- section.settings.button_title | escape -}}
+        </a>
+      {% endif %}
+    </header>
+  {% endif %}
+  <ul class="collapsible-content__items">
+    {% for block in section.blocks %}
+      {% liquid
+        if section.settings.open_first and forloop.index == 1
+          assign is_open = true
+        else
+          assign is_open = false
+        endif
+        if forloop.index == 1
+          assign is_first = true
+        else
+          assign is_first = false
+        endif
+      %}
+      <li class="collapsible-content__item">
+        {% render 'accordion',
+          title: block.settings.title,
+          text: block.settings.text,
+          is_open: is_open,
+          is_first: is_first
+        %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% schema %}
+{
+  "name": "Collapsible content",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Section title",
+      "default": "Example title"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Section description",
+      "default": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_title",
+      "label": "Button title",
+      "default": "Button title",
+      "info": "Leave empty to hide the button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first accordion",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Accordion",
+      "type": "accordion",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Accordion title",
+          "default": "Example accordion title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Accordion text",
+          "default": "<p>Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collapsible content",
+      "blocks": [
+        {
+          "type": "accordion"
+        },
+        {
+          "type": "accordion"
+        },
+        {
+          "type": "accordion"
+        },
+        {
+          "type": "accordion"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
