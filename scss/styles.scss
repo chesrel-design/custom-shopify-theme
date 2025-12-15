@@ -1,0 +1,15 @@
+@import 'media',
+'variables',
+'fonts',
+'mixins',
+'normalize',
+'globals',
+'utils';
+
+// Importing small essential blocks because they don't have their own sections/snippets and to beat the specificty
+@import 
+'blocks/link',
+'blocks/button',
+'blocks/menu-list',
+'blocks/dialog'
+;

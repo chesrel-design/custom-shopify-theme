@@ -1,0 +1,48 @@
+:root {
+    --color-gray-medium-light: #bfbfbf;
+    --color-gray-light: #ececec;
+    --color-black: #000000;
+    --color-black-body-text: #171717;
+
+    --color-white: #ffffff;
+    --color-white-body-text: #e9e9e9;
+
+    --border-width: 1px;
+    --border-width-l: 2px;
+
+    --border: var(--border-width) solid var(--color-black);
+    --border-l: var(--border-width-l) solid var(--color-black);
+
+    --font-family: 'Montserrat', sans-serif;
+    
+    --container-padding-x: 2rem;
+    --section-padding-y: 8rem;
+
+    --spacing-s: 1.2rem;
+    --spacing-sm: 2rem;
+    --spacing-m: 2.4rem;
+    --spacing-ml: 3.2rem;
+    --spacing-l: 4.4rem;
+    --spacing-xl: 8rem;
+
+    @include mobile {
+        --section-padding-y: 5.2rem;
+    }
+
+    --container-width: 150rem;
+    --container-max-width: calc(var(--container-width) + var(--container-padding-x)*2);
+    --container-width-s: 100rem;
+    --container-width-xs: 75rem;
+
+    --header-padding-y: 2rem;
+
+    // --button-padding: 12px 16px;
+    // --input-padding: 12px 16px;
+
+    // @include mobile {
+    //     --button-padding: 8px 12px;
+    //     --input-padding: 8px 12px;
+    // }
+
+    --transition-duration: 0.2s;
+}

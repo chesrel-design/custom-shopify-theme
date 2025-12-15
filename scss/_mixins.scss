@@ -1,0 +1,175 @@
+@mixin reset-button {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    transition-duration: var(--transition-duration);
+    color: currentColor;
+}
+
+@mixin reset-input {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    transition-duration: var(--transition-duration);
+    outline: none;
+}
+
+@mixin flex-center($inline: false) {
+    @if($inline) {
+        display: inline-flex;
+    }
+
+    @else {
+        display: flex;
+    }
+
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin abs-center($axis: false) {
+    position: absolute;
+
+    @if $axis {
+        @if $axis =='y' {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        @else if $axis =='x' {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+    }
+
+    @else {
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+    }
+
+}
+
+@mixin square($size) {
+    aspect-ratio: 1;
+    width: $size;
+    height: $size;
+}
+
+@mixin round($size) {
+    @include square($size);
+    border-radius: calc(infinity * 1px);
+}
+
+@mixin round-borders {
+    border-radius: calc(infinity * 1px);
+}
+
+@mixin visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    white-space: nowrap !important;
+    clip-path: inset(100%) !important;
+    clip: rect(0 0 0 0) !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+}
+
+@mixin reset-dialog {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+@mixin reset-ul {
+    & li {
+        padding-left: 12px;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            display: inline-block;
+            @include round(3px);
+            background-color: currentColor;
+            top: 0.5em;
+            transform: translateY(50%);
+            left: 0;
+        }
+    }
+}
+
+@mixin heading-base {
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+// Specific heading mixins
+// Pass any string to wrap words
+
+@mixin h1($wrap: false) {
+    @include heading-base;
+    font-size: 6.8rem;
+
+    @if($wrap) {
+        overflow-wrap: break-word;
+    }
+}
+
+@mixin h2($wrap: false) {
+    @include heading-base;
+    font-size: 4.8rem;
+
+    @if($wrap) {
+        overflow-wrap: break-word;
+    }
+}
+
+@mixin h3($wrap: false) {
+    @include heading-base;
+    font-size: 3.2rem;
+
+    @if($wrap) {
+        overflow-wrap: break-word;
+    }
+}
+
+@mixin h4($wrap: false) {
+    @include heading-base;
+    font-size: 2.4rem;
+
+    @if($wrap) {
+        overflow-wrap: break-word;
+    }
+}
+
+@mixin text-s {
+    font-size: 1.4rem;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+@mixin text-m {
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 1.4;
+
+    @include tablet {
+        font-size: 1.6rem;
+    }
+}
+
+@mixin text-ml {
+    font-size: 2.4rem;
+    font-weight: 400;
+    line-height: 1.4;
+
+    @include tablet {
+        font-size: 2rem;
+    }
+}

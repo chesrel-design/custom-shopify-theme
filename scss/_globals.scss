@@ -1,0 +1,128 @@
+html {
+    font-size: 62.5%;
+
+}
+
+body {
+    font-size: 1.8rem;
+    font-family: var(--font-family);
+    line-height: 1.4;
+    color: var(--color-black-body-text);
+    background-color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+
+    @include tablet {
+        font-size: 1.6rem;
+    }
+}
+
+main {
+    flex: 1;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+h1, h2, h3, h4, .h1, .h2, .h3, .h4, h5, .h5, h6, .h6 {
+    overflow-wrap: break-word;
+}
+
+h1, .h1 {
+    font-size: 6.8rem;
+    line-height: 1.2;
+
+    @include tablet {
+        font-size: 4.8rem;
+    }
+}
+
+h2, .h2 {
+    font-size: 4.8rem;
+    line-height: 1.2;
+
+    @include tablet {
+        font-size: 3.6rem;
+    }
+}
+
+h3, .h3 {
+    font-size: 3.2rem;
+
+    @include tablet {
+        font-size: 2.8rem;
+    }
+}
+
+h4, .h4 {
+    font-size: 2.4rem;
+}
+
+.text {
+
+    &--s {
+        font-size: 1.4rem;
+        line-height: 1.4;
+    }
+
+    &--m {
+        font-size: 1.8rem;
+        line-height: 1.4;
+
+        @include tablet {
+            font-size: 1.6rem;
+        }
+    }
+
+    &--ml {
+        font-size: 2.4rem;
+        line-height: 1.4;
+
+        @include tablet {
+            font-size: 2rem;
+        }
+    }
+
+    &--l {
+        font-size: 2.8rem;
+        line-height: 1.4;
+
+        @include tablet {
+            font-size: 2.4rem;
+        }
+    }
+}
+
+.italic {
+    font-style: italic;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.lh100 {
+    line-height: 1;
+}
+
+
+
+button, a {
+    cursor: pointer;
+}
+
+:is(button, a, input, svg, span) {
+    transition-duration: var(--transition-duration);
+}
+
+:is(button, a, input, svg, span)::before,
+:is(button, a, input, svg, span)::after {
+    transition-duration: var(--transition-duration);
+}
